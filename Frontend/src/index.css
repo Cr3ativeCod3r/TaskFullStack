@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+
+body {
+    font-family: "Open Sans", sans-serif; /* Ustawia czcionkę na Open Sans lub standardową czcionkę bezszeryfową */
+    font-size: 16px; /* Ustawia domyślny rozmiar czcionki */
+    line-height: 1.6; /* Ustawia odstęp między liniami */
+    color: #e2dddd; /* Ustawia kolor tekstu na ciemnoszary */
+}
+
+h1, h2, h3 {
+    font-family: "Roboto", sans-serif; /* Ustawia czcionkę na Roboto lub standardową czcionkę bezszeryfową dla nagłówków */
+    color: #444; /* Kolor nagłówków */
+}
+
+p {
+    margin-bottom: 1em; /* Dodaje odstęp na końcu paragrafów */
+}
+
+a {
+    color: #007bff; /* Kolor odnośników */
+    text-decoration: none; /* Usuwa podkreślenie odnośników */
+}
+
+a:hover {
+    text-decoration: underline; /* Dodaje podkreślenie podczas najechania myszką na odnośnik */
+}
