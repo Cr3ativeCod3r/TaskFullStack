@@ -83,12 +83,12 @@ function Register() {
                 className="select select-bordered w-full max-w-xs"
               >
                 <option value="">Pick Continent</option>
-                <option value="op1">North America </option>
-                <option value="op2">Australia</option>
-                <option value="op3">Europe</option>
-                <option value="op4">Asia</option>
-                <option value="op5">Africa </option>
-                <option value="op6">South America</option>
+                <option value="North America">North America </option>
+                <option value="Australia">Australia</option>
+                <option value="Europe">Europe</option>
+                <option value="Asia">Asia</option>
+                <option value="Africa">Africa </option>
+                <option value="South America">South America</option>
               </select>
             </div>
           );
@@ -99,9 +99,9 @@ function Register() {
               <label className="label capitalize">{key}</label>
               <input
                 type={
-                  key === "Email"
+                  key === "email"
                     ? "email"
-                    : key === "Password"
+                    : key === "password"
                     ? "password"
                     : "text"
                 }

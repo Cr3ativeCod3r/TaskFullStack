@@ -10,6 +10,7 @@ const users = require("./routes/user");
 const User = require("./models/User");
 const app = express();
 const server = http.createServer(app);
+const moment = require('moment-timezone');
 app.use(cookieParser());
 app.use(express.json());
 app.use(cors());
@@ -32,3 +33,16 @@ mongoose.connect(
 server.listen(PORT, () => {
     console.log(`Server is running at ${PORT}..`);
 });
+
+//Time Zone
+
+app.get('/time', (req, res) => {
+    const timeZone = req.query.timezone;
+  
+    if (!timeZone || !moment.tz.zone(timeZone)) {
+      return res.status(400).json({ error: 'Invalid or missing timezone' });
+    }
+  
+    const currentTime = moment.tz(timeZone).format('HH:mm');
+    res.json({ time: currentTime });
+  });

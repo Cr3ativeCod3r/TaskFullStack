@@ -4,10 +4,9 @@ const {
 } = require("../helpers/validation");
 
 const User = require("../models/User");
-const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const {generateToken} = require("../helpers/tokens");
-const mongoose = require("mongoose");
+
 
 exports.register = async (req, res) => {
     try {
@@ -77,7 +76,6 @@ exports.login = async (req, res) => {
         res.send({
             id: user._id,
             username: user.username,
-            picture: user.picture,
             first_name: user.first_name,
             last_name: user.last_name,
             token: token,

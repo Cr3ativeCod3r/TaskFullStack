@@ -32,12 +32,6 @@ const userSchema = mongoose.Schema(
             type: String,
             required: [true, "password is required"],
         },
-        picture: {
-            type: String,
-            trim: true,
-            default:
-                "https://logowik.com/content/uploads/images/student5651.jpg",
-        },
         continent: {
             type: String,
             required: true
