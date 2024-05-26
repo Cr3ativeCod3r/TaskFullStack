@@ -267,55 +267,91 @@ const TaskManager = () => {
       </div>
 
       {/*Zadania  wyswietl*/}
-      <div className="flex-grow ">
-        <table className="table-auto mx-auto border-collapse">
-          <thead>
-            <tr className="bg-gray-200">
-              <th className="px-4 py-2 sm:w-1/7 text-left"></th>
-              <th className="px-4 py-2 sm:w-1/7 text-left">Title</th>
-              <th className="px-4 py-2 sm:w-1/7 text-left">Notes</th>
-              <th className="px-4 py-2 sm:w-1/7 text-left">Priority</th>
-              <th className="px-4 py-2 sm:w-1/7 text-left">Deadline</th>
-              <th className="px-4 py-2 sm:w-1/7 text-center">Status</th>
-              <th className="px-4 py-2 sm:w-1/7 text-center">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {tasks.map((task, index) => (
-              <tr
-                key={task._id}
-                className={`${index % 2 === 0 ? "bg-gray-100" : "bg-white"} ${
-                  task.is_done ? "bg-green-100" : ""
-                }`}
-              >
-                <td className="border px-4 py-2 sm:w-1/7">{index + 1}</td>
-                <td className="border px-4 py-2 sm:w-1/7">{task.title}</td>
-                <td className="border px-4 py-2 sm:w-1/7">{task.content}</td>
-                <td className="border px-4 py-2 sm:w-1/7">{task.priority}</td>
-                <td className="border px-4 py-2 sm:w-1/7">
-                  {new Date(task.deadline).toLocaleDateString()}
-                </td>
-                <td className="border py-2 sm:w-1/7">
-                  <input
-                    type="checkbox"
-                    className="largerCheckbox mr-auto ml-auto flex"
-                    checked={task.is_done}
-                    onChange={() => handleCheckboxChange(task)}
-                  />
-                </td>
-                <td className="border px-4 py-2 sm:w-1/7">
-                  <button onClick={() => startEdit(task)}>
-                    <FaEdit className="ml-4" />
-                  </button>
-                  <button onClick={() => deleteTask(task._id)}>
-                    <FaTrash className="ml-8" />
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+      
+      <div className="flex-grow">
+  <table className="table-auto mx-auto border-collapse">
+    <thead>
+      <tr className="bg-gray-200">
+        <th className="px-4 py-2 sm:w-1/7 text-left"></th>
+        <th className="px-4 py-2 sm:w-1/7 text-left">Title</th>
+        <th className="px-4 py-2 sm:w-1/7 text-left">Notes</th>
+        <th className="px-4 py-2 sm:w-1/7 text-left">Priority</th>
+        <th className="px-4 py-2 sm:w-1/7 text-left">Deadline</th>
+        <th className="px-4 py-2 sm:w-1/7 text-center">Status</th>
+        <th className="px-4 py-2 sm:w-1/7 text-center">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {tasks
+        .filter(task => !task.is_done)
+        .map((task, index) => (
+          <tr
+            key={task._id}
+            className={`${index % 2 === 0 ? "bg-gray-100" : "bg-white"}`}
+          >
+            <td className="border px-4 py-2 sm:w-1/7">{index + 1}</td>
+            <td className="border px-4 py-2 sm:w-1/7">{task.title}</td>
+            <td className="border px-4 py-2 sm:w-1/7">{task.content}</td>
+            <td className="border px-4 py-2 sm:w-1/7">{task.priority}</td>
+            <td className="border px-4 py-2 sm:w-1/7">
+              {new Date(task.deadline).toLocaleDateString()}
+            </td>
+            <td className="border py-2 sm:w-1/7">
+              <input
+                type="checkbox"
+                className="largerCheckbox mr-auto ml-auto flex"
+                checked={task.is_done}
+                onChange={() => handleCheckboxChange(task)}
+              />
+            </td>
+            <td className="border px-4 py-2 sm:w-1/7">
+              <button onClick={() => startEdit(task)}>
+                <FaEdit className="ml-4" />
+              </button>
+              <button onClick={() => deleteTask(task._id)}>
+                <FaTrash className="ml-8" />
+              </button>
+            </td>
+          </tr>
+        ))}
+    </tbody>
+    <tbody>
+      {tasks
+        .filter(task => task.is_done)
+        .map((task, index) => (
+          <tr
+            key={task._id}
+            className={`${index % 2 === 0 ? "bg-gray-100" : "bg-white"} bg-green-100`}
+          >
+            <td className="border px-4 py-2 sm:w-1/7">{index + 1}</td>
+            <td className="border px-4 py-2 sm:w-1/7">{task.title}</td>
+            <td className="border px-4 py-2 sm:w-1/7">{task.content}</td>
+            <td className="border px-4 py-2 sm:w-1/7">{task.priority}</td>
+            <td className="border px-4 py-2 sm:w-1/7">
+              {new Date(task.deadline).toLocaleDateString()}
+            </td>
+            <td className="border py-2 sm:w-1/7">
+              <input
+                type="checkbox"
+                className="largerCheckbox mr-auto ml-auto flex"
+                checked={task.is_done}
+                onChange={() => handleCheckboxChange(task)}
+              />
+            </td>
+            <td className="border px-4 py-2 sm:w-1/7">
+              <button onClick={() => startEdit(task)}>
+                <FaEdit className="ml-4" />
+              </button>
+              <button onClick={() => deleteTask(task._id)}>
+                <FaTrash className="ml-8" />
+              </button>
+            </td>
+          </tr>
+        ))}
+    </tbody>
+  </table>
+</div>
+
     </div>
   );
 };
