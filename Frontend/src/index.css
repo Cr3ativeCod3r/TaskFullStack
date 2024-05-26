@@ -2,35 +2,71 @@
 @tailwind components;
 @tailwind utilities;
 
-
-
-
 body {
-    font-family: "Open Sans", sans-serif; /* Ustawia czcionkę na Open Sans lub standardową czcionkę bezszeryfową */
-    font-size: 16px; /* Ustawia domyślny rozmiar czcionki */
-    line-height: 1.6; /* Ustawia odstęp między liniami */
-    color: #e2dddd; /* Ustawia kolor tekstu na ciemnoszary */
-    
+  font-family: "Open Sans", sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #e2dddd;
 }
 
-h1, h2, h3 {
-    font-family: "Roboto", sans-serif; /* Ustawia czcionkę na Roboto lub standardową czcionkę bezszeryfową dla nagłówków */
-    color: #444; /* Kolor nagłówków */
+h1,
+h2,
+h3 {
+  font-family: "Roboto", sans-serif;
+  color: #444;
 }
 
 p {
-    margin-bottom: 1em; /* Dodaje odstęp na końcu paragrafów */
+  margin-bottom: 1em;
 }
 
 a {
-    color: #007bff; /* Kolor odnośników */
-    text-decoration: none; /* Usuwa podkreślenie odnośników */
+  color: #007bff;
+  text-decoration: none;
 }
 
 a:hover {
-    text-decoration: underline; /* Dodaje podkreślenie podczas najechania myszką na odnośnik */
+  text-decoration: underline;
 }
 
-td,tr{
-    color: black;
+td,
+tr {
+  color: black;
+}
+
+td:last-child {
+  width: 120px;
+}
+
+body,
+html {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+#toolbar {
+  color: white;
+  top: 10px;
+  left: 10px;
+  z-index: 10;
+}
+#toolbar button {
+  margin-right: 5px;
+}
+canvas {
+  border: 1px solid black;
+  display: block;
+}
+
+.canvass {
+  cursor: crosshair;
+}
+
+.largerCheckbox {
+  width: 20px;
+  height: 20px;
+}
+
+.bg-green-100 {
+  background-color: #d4f7dc;
 }

@@ -43,15 +43,16 @@ function Login() {
       dispatch({ type: "LOGIN", payload: data });
       Cookies.set("user", JSON.stringify(data));
       window.location.href = "/";
-
-
     } catch (error) {
       setError(error.response.data.message);
-    } 
+    }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-2 p-4 bg-slate-800 rounded-md mt-20">
+    <form
+      onSubmit={handleSubmit}
+      className="flex flex-col gap-2 p-4 bg-slate-800 rounded-md mt-20"
+    >
       <div className="form-control">
         <label className="label capitalize">email</label>
         <input
@@ -76,7 +77,7 @@ function Login() {
       </div>
       <button
         type="submit"
-        disabled={!isFormValid }
+        disabled={!isFormValid}
         className="btn btn-primary w-80 mt-5"
       >
         Login

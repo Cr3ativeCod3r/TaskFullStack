@@ -3,6 +3,9 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../reducers/userSlice";
 import logo from "../assets/task.svg";
+import { Link } from "react-router-dom";
+import { FaChalkboard } from "react-icons/fa";
+import { FaEdit, FaTrash } from "react-icons/fa";
 
 const TaskManager = () => {
   const [time, setTime] = useState("");
@@ -42,11 +45,11 @@ const TaskManager = () => {
     title: "",
     content: "",
     priority: "Low",
-    deadline: new Date().toISOString().split('T')[0],
+    deadline: new Date().toISOString().split("T")[0],
   });
-  
+
   const [editingTaskId, setEditingTaskId] = useState(null);
-  const [isEditing, setIsEditing] = useState(false); // Dodaj stan dla flagi edycji
+  const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
     fetchTasks();
@@ -78,7 +81,7 @@ const TaskManager = () => {
     e.preventDefault();
     if (editingTaskId) {
       await updateTask(editingTaskId, task);
-      setIsEditing(false); // Zakończ edycję po zaktualizowaniu zadania
+      setIsEditing(false);
     } else {
       await addTask(task);
     }
@@ -87,7 +90,7 @@ const TaskManager = () => {
       title: "",
       content: "",
       priority: "Low",
-      deadline: new Date().toISOString().split('T')[0],
+      deadline: new Date().toISOString().split("T")[0],
     });
     setEditingTaskId(null);
     fetchTasks();
@@ -105,9 +108,15 @@ const TaskManager = () => {
   const updateTask = async (id, task) => {
     try {
       await axios.put(import.meta.env.VITE_BackURL + `/tasks/${id}`, task);
+      fetchTasks();
     } catch (error) {
       console.error("Error updating task", error);
     }
+  };
+
+  const handleCheckboxChange = (task) => {
+    const updatedTask = { ...task, is_done: !task.is_done };
+    updateTask(task._id, updatedTask);
   };
 
   const deleteTask = async (id) => {
@@ -122,7 +131,7 @@ const TaskManager = () => {
   const startEdit = (task) => {
     setTask(task);
     setEditingTaskId(task._id);
-    setIsEditing(true); // Rozpocznij edycję
+    setIsEditing(true);
   };
 
   const handleCancel = () => {
@@ -134,41 +143,75 @@ const TaskManager = () => {
       deadline: "",
     });
     setEditingTaskId(null);
-    setIsEditing(false); // Zakończ edycję
+    setIsEditing(false);
   };
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full w-4/5 mr-auto ml-auto mediacointainer ">
       {/* Navbar */}
-      <nav className="bg-gray-700 text-white p-4">
-        <div className="flex justify-between items-center">
-          <h1 className="text-slate-400 flex items-center">
-            <img src={logo} className="w-8 mr-2" alt="logo" />
-            Task Manager
-          </h1>
-          <h1 className="text-white">
-            {timezone} {time}{" "}
-          </h1>
-          <div>
-            <span className="mr-4">
-              {user.first_name} {user.last_name}
-            </span>
 
-            <button
-              onClick={() => {
-                dispatch(logout());
-                location.reload();
-              }}
-              className="bg-slate-400 hover:bg-slate-300 text-white font-bold py-2 px-4 rounded"
-            >
-              Logout
-            </button>
+      <nav className="bg-gray-700 text-white p-4 rounded-md mt-2">
+        <div className="flex justify-between items-center">
+          <div className="flex items-center space-x-2">
+            <img src={logo} className="w-8 mr-2" alt="logo" />
+            <h1 className="text-slate-400 ">Task Manager</h1>
+          </div>
+          <div className="hidden md:block flex-1 text-center">
+            <h1 className="text-white text-xl font-bold">
+              {timezone} {time}
+            </h1>
+          </div>
+
+          <span className="mr-4 hidden md:block">
+            {user.first_name} {user.last_name}
+          </span>
+
+          <div className="flex items-center space-x-4">
+            <div className="avatar hidden md:block">
+              <div className="w-10 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                <img
+                  src="https://www.shareicon.net/data/2017/01/23/874893_management_512x512.png"
+                  alt="user-avatar"
+                />
+              </div>
+            </div>
+            <ul className="menu lg:menu-horizontal bg-base-200 rounded-box relative">
+              <li>
+                <details className="relative z-10">
+                  <summary>Menu</summary>
+                  <ul className="space-y-1 absolute right-0 mt-8 bg-base-200  shadow-md rounded-md">
+                    <li>
+                      <button className="border bg-cyan-200 border-red-600 text-red-600 hover:bg-cyan-300 hover:text-white py-2 px-4 rounded w-full">
+                        <Link
+                          to="/board"
+                          className="flex items-center space-x-2"
+                        >
+                          <FaChalkboard />
+                          <span>Board</span>
+                        </Link>
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        onClick={() => {
+                          dispatch(logout());
+                          location.reload();
+                        }}
+                        className="bg-slate-400 hover:bg-slate-300 text-white font-bold  rounded w-full text-center"
+                      >
+                        Logout
+                      </button>
+                    </li>
+                  </ul>
+                </details>
+              </li>
+            </ul>
           </div>
         </div>
       </nav>
 
       {/* Dodawanie zadania */}
-      <div className="p-4 w-1/2 mr-auto ml-auto">
+      <div className="p-4 mr-auto ml-auto w-4/5">
         <form onSubmit={handleSubmit} className="mb-4">
           <input
             type="text"
@@ -186,7 +229,6 @@ const TaskManager = () => {
             value={task.content}
             onChange={handleChange}
             className="block mb-2 p-2 w-full"
-          
           />
           <select
             name="priority"
@@ -205,7 +247,6 @@ const TaskManager = () => {
             value={task.deadline}
             onChange={handleChange}
             className="block mb-2 p-2 w-full"
-
           />
           <button
             type="submit"
@@ -213,8 +254,7 @@ const TaskManager = () => {
           >
             {editingTaskId ? "Update Task" : "Add Task"}
           </button>
-          
-          {/* Pokaż przycisk "Cancel" tylko podczas edycji */}
+
           {isEditing && (
             <button
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-2"
@@ -226,50 +266,53 @@ const TaskManager = () => {
         </form>
       </div>
 
-      {/* Lista zadań */}
-      <div className="overflow-x-auto flex-grow">
+      {/*Zadania  wyswietl*/}
+      <div className="flex-grow ">
         <table className="table-auto mx-auto border-collapse">
           <thead>
             <tr className="bg-gray-200">
-              <th className="px-4 py-2"></th>
-              <th className="px-4 py-2">Title</th>
-              <th className="px-4 py-2">Content</th>
-              <th className="px-4 py-2">Priority</th>
-              <th className="px-4 py-2">Deadline</th>
-              <th className="px-4 py-2">Status</th>
-              <th className="px-4 py-2">Actions</th>
+              <th className="px-4 py-2 sm:w-1/7 text-left"></th>
+              <th className="px-4 py-2 sm:w-1/7 text-left">Title</th>
+              <th className="px-4 py-2 sm:w-1/7 text-left">Notes</th>
+              <th className="px-4 py-2 sm:w-1/7 text-left">Priority</th>
+              <th className="px-4 py-2 sm:w-1/7 text-left">Deadline</th>
+              <th className="px-4 py-2 sm:w-1/7 text-center">Status</th>
+              <th className="px-4 py-2 sm:w-1/7 text-center">Actions</th>
             </tr>
           </thead>
           <tbody>
-          {tasks.sort((a, b) => {
-    const priorityOrder = { High: 3, Medium: 2, Low: 1 };
-    return priorityOrder[b.priority] - priorityOrder[a.priority];
-  }).map((task, index) => (
-    <tr key={task._id} className={index % 2 === 0 ? "bg-gray-100" : "bg-white"}>
-      <td className="border px-4 py-2">{index + 1}</td>
-      <td className="border px-4 py-2">{task.title}</td>
-      <td className="border px-4 py-2">{task.content}</td>
-      <td className="border px-4 py-2">{task.priority}</td>
-      <td className="border px-4 py-2">
-        {new Date(task.deadline).toLocaleDateString()}
-      </td>
-      <td className="border px-4 py-2">{task.is_done ? "Done" : "Not Done"}</td>
-      <td className="border px-4 py-2">
-        <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2"
-          onClick={() => startEdit(task)}
-        >
-          Edit
-        </button>
-        <button
-          className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-          onClick={() => deleteTask(task._id)}
-        >
-          Delete
-        </button>
-      </td>
-    </tr>
-  ))}
+            {tasks.map((task, index) => (
+              <tr
+                key={task._id}
+                className={`${index % 2 === 0 ? "bg-gray-100" : "bg-white"} ${
+                  task.is_done ? "bg-green-100" : ""
+                }`}
+              >
+                <td className="border px-4 py-2 sm:w-1/7">{index + 1}</td>
+                <td className="border px-4 py-2 sm:w-1/7">{task.title}</td>
+                <td className="border px-4 py-2 sm:w-1/7">{task.content}</td>
+                <td className="border px-4 py-2 sm:w-1/7">{task.priority}</td>
+                <td className="border px-4 py-2 sm:w-1/7">
+                  {new Date(task.deadline).toLocaleDateString()}
+                </td>
+                <td className="border py-2 sm:w-1/7">
+                  <input
+                    type="checkbox"
+                    className="largerCheckbox mr-auto ml-auto flex"
+                    checked={task.is_done}
+                    onChange={() => handleCheckboxChange(task)}
+                  />
+                </td>
+                <td className="border px-4 py-2 sm:w-1/7">
+                  <button onClick={() => startEdit(task)}>
+                    <FaEdit className="ml-4" />
+                  </button>
+                  <button onClick={() => deleteTask(task._id)}>
+                    <FaTrash className="ml-8" />
+                  </button>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
@@ -278,4 +321,3 @@ const TaskManager = () => {
 };
 
 export default TaskManager;
-

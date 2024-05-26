@@ -1,19 +1,18 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 
 function Register() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    email:"",
-    password:"",
-    name:"",
-    lastname:"",
-    nick:"",
-    continent:""
+    email: "",
+    password: "",
+    name: "",
+    lastname: "",
+    nick: "",
+    continent: "",
   });
 
   const [isFormValid, setIsFormValid] = useState(false);
@@ -49,12 +48,12 @@ function Register() {
         setSuccess(data.message);
 
         setFormData({
-          email:"",
-          password:"",
-          name:"",
-          lastname:"",
-          nick:"",
-          continent:""
+          email: "",
+          password: "",
+          name: "",
+          lastname: "",
+          nick: "",
+          continent: "",
         });
 
         setTimeout(function () {
@@ -73,14 +72,14 @@ function Register() {
       {Object.entries(formData).map(([key, value]) => {
         if (key === "continent") {
           return (
-            <div key={key} className="form-control">
+            <div key={key} className="form-control ">
               <label className="label capitalize">{key}</label>
               <select
                 name={key}
                 value={value}
                 onChange={handleChange}
                 required
-                className="select select-bordered w-full max-w-xs"
+                className="select select-bordered w-full"
               >
                 <option value="">Pick Continent</option>
                 <option value="North America">North America </option>
@@ -92,7 +91,6 @@ function Register() {
               </select>
             </div>
           );
-        
         } else {
           return (
             <div key={key} className="form-control">
@@ -109,7 +107,7 @@ function Register() {
                 value={value}
                 onChange={handleChange}
                 required
-                className="input input-bordered w-full max-w-xs"
+                className="input input-bordered w-full "
               />
             </div>
           );
@@ -118,7 +116,7 @@ function Register() {
       <button
         type="submit"
         disabled={!isFormValid}
-        className="btn btn-primary mt-10 w-80"
+        className="btn btn-primary mt-10 meidar w-auto"
       >
         Register
       </button>
